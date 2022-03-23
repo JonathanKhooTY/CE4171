@@ -5,6 +5,7 @@ import imutils
 import numpy as np
 import cv2
 import wget
+import os
 #from google.colab.patches import cv2_imshow
 #from IPython.display import display, Javascript
 #from google.colab.output import eval_js
@@ -19,8 +20,7 @@ MQTT_SERVER = "test.mosquitto.org"
 MQTT_PATH = "ef37917e08872c2f2a16d233ec4925ce"
 
 #def imageProcessing(image_name):
-prototxt = wget.download('https://raw.githubusercontent.com/opencv/opencv/master/samples/dnn/face_detector/deploy.prototxt')
-model = wget.download('https://raw.githubusercontent.com/opencv/opencv_3rdparty/dnn_samples_face_detector_20170830/res10_300x300_ssd_iter_140000.caffemodel')
+
 
 # The callback for when the client receives a connect response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -45,6 +45,8 @@ def on_message(client, userdata, msg):
     image = imutils.resize(image, width=400)
     (h, w) = image.shape[:2]
     
+    prototxt = wget.download('https://raw.githubusercontent.com/opencv/opencv/master/samples/dnn/face_detector/deploy.prototxt')
+    model = wget.download('https://raw.githubusercontent.com/opencv/opencv_3rdparty/dnn_samples_face_detector_20170830/res10_300x300_ssd_iter_140000.caffemodel')
     net = cv2.dnn.readNetFromCaffe(prototxt, model)
     
     image = imutils.resize(image, width=400)
@@ -68,31 +70,17 @@ def on_message(client, userdata, msg):
 
     cv2.imwrite('processedpic.jpg',image)
     
-
-    '''
-    # Open an Image
-    img = Image.open('output.jpg')
-    img = img.convert('RGB')
-    # Call draw Method to add 2D graphics in an image
-    I1 = ImageDraw.Draw(img)
-    
-    # Add Text to an image
-    I1.text((28, 36), "nicadsade Car", fill=(255, 0, 0))
-    
-    # Display edited image
-    #img.show()
-    
-    # Save the edited image
-    img.save("output2.jpg")
-    print('Modificatio complete')
+    #Include deletion of models
+    os.remove('res10_300x300_ssd_iter_140000.caffemodel')
+    os.remove('deploy.prototxt')
 
     #Sending updated picture back to client
-    f=open("output2.jpg", "rb") #3.7kiB in same folder
+    f=open("processedpic.jpg", "rb") #3.7kiB in same folder
     fileContent = f.read()
     byteArr = bytearray(fileContent)
 
     publish.single(MQTT_PATH2, byteArr, hostname=MQTT_SERVER2)
-    '''
+    print('\nRetransmission of processed pic complete\n')
 client = mqtt.Client()
 client.on_connect = on_connect
 client.on_message = on_message
