@@ -8,3 +8,4 @@ fileContent = f.read()
 byteArray = bytearray(fileContent)
 
 publish.single(MQTT_PATH,byteArray, hostname=MQTT_SERVER)
+print('Image sent to Cloud!')

@@ -15,9 +15,10 @@ from base64 import b64decode
 from PIL import Image, ImageDraw, ImageFont
 
 MQTT_SERVER2 = "test.mosquitto.org"
-MQTT_PATH2 = "testing045"
+MQTT_PATH2 = "m0difiedef37917e08872c2f2a16d233ec4925ce"
 MQTT_SERVER = "test.mosquitto.org"
 MQTT_PATH = "ef37917e08872c2f2a16d233ec4925ce"
+
 
 #def imageProcessing(image_name):
 
@@ -34,11 +35,12 @@ def on_message(client, userdata, msg):
 
     f = open('output.jpg', 'wb')
     f.write(msg.payload)
-    print('Image recevied')
     f.close()
+    print('Image from Edge Device received.....')
     #print(msg.topic+" "+str(msg.payload))
     # more callbacks, etc
-
+    print('Now processing received image through facial recognition....')
+    
     image = cv2.imread('output.jpg')
 
     # resize it to have a maximum width of 400 pixels

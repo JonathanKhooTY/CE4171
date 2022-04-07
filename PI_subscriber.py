@@ -1,6 +1,6 @@
 import paho.mqtt.client as mqtt
 MQTT_SERVER = "test.mosquitto.org"
-MQTT_PATH = "testing045"
+MQTT_PATH = "m0difiedef37917e08872c2f2a16d233ec4925ce"
 
 # The callback for when the client receives a connect response from the server.
 def on_connect(client, userdata, flags, rc):
@@ -14,8 +14,8 @@ def on_message(client, userdata, msg):
 
     f = open('modifiedData.jpg','wb')
     f.write(msg.payload)
-    print('Modified image receiveed')
     f.close()
+    print('Facial recognition complete! Image received from Cloud!')
     #print(msg.topic+" "+str(msg.payload))
     # more callbacks, etc
 
