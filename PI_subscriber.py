@@ -1,4 +1,7 @@
 import paho.mqtt.client as mqtt
+from PIL import Image
+from time import sleep
+
 MQTT_SERVER = "test.mosquitto.org"
 MQTT_PATH = "m0difiedef37917e08872c2f2a16d233ec4925ce"
 
@@ -15,7 +18,11 @@ def on_message(client, userdata, msg):
     f = open('modifiedData.jpg','wb')
     f.write(msg.payload)
     f.close()
+    sleep(0.5)
     print('Facial recognition complete! Image received from Cloud!')
+    print('Opening processed image....')
+    img = Image.open('modifiedData.jpg')
+    img.show()
     #print(msg.topic+" "+str(msg.payload))
     # more callbacks, etc
 
