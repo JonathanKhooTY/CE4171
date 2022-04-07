@@ -1,0 +1,3 @@
+https://pyimagesearch.com/2018/02/26/face-detection-with-opencv-and-deep-learning/
+
+http://razzpisampler.oreilly.com/ch07.html
