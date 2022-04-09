@@ -7,6 +7,12 @@ The image processing and inference model is stored separately in a Cloud Machine
 
 Wireless protocol (Specifically MQTT) was used to enable communication between the IoT Device and the Cloud Machine. The GPIO pins was used to simulate the doorbell button trigger.
 
+Security note: As a public MQTT broker channel (_test.mosquitto.org_) was used to demonstrate this project, a unique channel had to be used. 
+
+The channel key for sending of images from IoT Device **to** Cloud machine can be derived from the MD5 hash of _topickey.txt_.
+
+The channel key for sending of images from Cloud machine **back to** IoT Device can be derived by prepending '_m0dified_' to the derived hash above.
+
 ***
 
 ## **Source Code Package Description**
